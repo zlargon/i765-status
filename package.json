@@ -6,6 +6,10 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "serverless": "1.58.0"
+  },
+  "scripts": {
+    "deploy": "serverless deploy -v"
   }
 }
