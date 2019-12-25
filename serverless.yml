@@ -32,7 +32,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: dev
+  stage: status
   region: us-east-1
 
 # you can overwrite defaults here
@@ -73,7 +73,7 @@ functions:
     handler: lambda/status.main
     events:
       - http:
-          path: status/{receipt_number}
+          path: /{receipt_number}
           method: get
 
 #  hello:
