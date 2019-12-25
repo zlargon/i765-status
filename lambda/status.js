@@ -13,18 +13,25 @@ export async function main(event) {
     body: `changeLocale=&appReceiptNum=${receipt_number}&initCaseSearch=CHECK+STATUS`
   });
 
+  // parse HTML
   const html = await res.text();
   const $ = cheerio.load(html);
-  let result = $('div.rows.text-center').html();
-  if (result === null) {
-    result = html;
+
+  // error
+  let body = $('#formErrorMessages').html();
+
+  // success
+  const status = $('div.rows.text-center h1').text();
+  if (status) {
+    const details = $('div.rows.text-center p').text().split('  ');
+    body = `
+      <h2>${status}</h2>
+      <ul>${details.map(s => `<li>${s}</li>`).join('\n')}</ul>`;
   }
 
   return {
     statusCode: res.status,
-    headers: {
-      'Content-Type': 'text/html'
-    },
-    body: result
+    headers: { 'Content-Type': 'text/html' },
+    body
   };
 };
